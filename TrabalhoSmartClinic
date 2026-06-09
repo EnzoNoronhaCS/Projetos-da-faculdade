@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartClinic | Gestão Integrada para Clínicas</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --primary-light: #ccfbf1;
+            --secondary: #2563eb;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --purple: #7c3aed;
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-500: #64748b;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            --white: #ffffff;
+            --shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #e0f2fe 0, transparent 35%), linear-gradient(135deg, #ecfeff 0%, #f8fafc 45%, #eef2ff 100%);
+            color: var(--slate-800);
+        }
+
+        button, input, textarea, select {
+            font: inherit;
+        }
+
+        button {
+            border: none;
+        }
+
+        .login-screen {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.08fr 0.92fr;
+            align-items: center;
+            gap: 32px;
+            padding: 46px;
+        }
+
+        .hero-panel {
+            background: linear-gradient(145deg, rgba(15, 118, 110, 0.95), rgba(37, 99, 235, 0.88));
+            color: var(--white);
+            border-radius: 34px;
+            min-height: 640px;
+            padding: 54px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-panel::before, .hero-panel::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.13);
+        }
+
+        .hero-panel::before {
+            top: -90px;
+            right: -70px;
+        }
+
+        .hero-panel::after {
+            bottom: -120px;
+            left: 12%;
+        }
+
+        .brand {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-mark {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.22);
+            font-weight: 900;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.18);
+            margin-bottom: 18px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(40px, 5vw, 68px);
+            line-height: 1;
+            letter-spacing: -0.06em;
+            margin-bottom: 22px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.86);
+            max-width: 650px;
+        }
+
+        .hero-metrics {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .hero-metric {
+            padding: 18px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.13);
+            border: 1px solid rgba(255,255,255,0.17);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-metric strong {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+
+        .hero-metric span {
+            color: rgba(255,255,255,0.80);
+            font-size: 13px;
+        }
+
+        .login-card {
+            background: rgba(255,255,255,0.90);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,0.80);
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .login-header {
+            padding: 34px 34px 18px;
+        }
+
+        .login-header h2 {
+            color: var(--slate-900);
+            font-size: 30px;
+            letter-spacing: -0.04em;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: var(--slate-500);
+            line-height: 1.6;
+        }
+
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            padding: 0 34px 20px;
+        }
+
+        .tab-btn {
+            padding: 11px 8px;
+            border-radius: 12px;
+            background: var(--slate-100);
+            color: var(--slate-600);
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.25s ease;
+            font-size: 13px;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            color: var(--primary-dark);
+            background: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        .login-form {
+            padding: 0 34px 34px;
+        }
+
+        .role-note {
+            padding: 14px 16px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--slate-700);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .input-group input, .input-group textarea, .input-group select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--slate-300);
+            border-radius: 13px;
+            font-size: 15px;
+            transition: 0.25s ease;
+            background: var(--white);
+            color: var(--slate-800);
+        }
+
+        .input-group input:focus, .input-group textarea:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+        }
+
+        .submit-btn, .btn-primary, .btn-secondary, .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 13px;
+            cursor: pointer;
+            font-weight: 900;
+            transition: 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .submit-btn, .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 12px 16px;
+            box-shadow: 0 12px 24px rgba(15, 118, 110, 0.20);
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 6px;
+            font-size: 16px;
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary-dark);
+            border: 1px solid var(--slate-200);
+            padding: 11px 15px;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--slate-600);
+            padding: 9px 12px;
+        }
+
+        .submit-btn:hover, .btn-primary:hover, .btn-secondary:hover, .btn-ghost:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.98);
+        }
+
+        .dashboard-screen {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background: var(--slate-100);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 292px;
+            background: #0b1220;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            border-right: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-header .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+        }
+
+        .sidebar-header strong {
+            display: block;
+            font-size: 19px;
+            letter-spacing: -0.03em;
+        }
+
+        .sidebar-header small {
+            color: #94a3b8;
+        }
+
+        .user-info {
+            margin: 18px;
+            padding: 18px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 18px;
+        }
+
+        .avatar-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+        }
+
+        .user-info h4 {
+            margin-bottom: 4px;
+        }
+
+        .user-info p {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 6px 12px 18px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .menu-item {
+            margin: 5px 0;
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: 0.25s ease;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .menu-item:hover:not(.locked), .menu-item.active-menu {
+            background: rgba(255,255,255,0.10);
+            color: var(--white);
+            transform: translateX(3px);
+        }
+
+        .menu-item.active-menu {
+            box-shadow: inset 4px 0 0 var(--primary-light);
+        }
+
+        .menu-item.locked {
+            opacity: 0.36;
+            cursor: not-allowed;
+        }
+
+        .menu-icon {
+            display: inline-flex;
+            width: 28px;
+            height: 28px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: rgba(255,255,255,0.07);
+            margin-right: 8px;
+            font-size: 12px;
+        }
+
+        .lock-icon {
+            display: none;
+            font-size: 11px;
+            padding: 3px 7px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.12);
+        }
+
+        .menu-item.locked .lock-icon {
+            display: inline-flex;
+        }
+
+        .logout-btn {
+            margin: 14px 18px 20px;
+            padding: 13px 18px;
+            background: rgba(220,38,38,0.14);
+            color: #fecaca;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 900;
+            border-radius: 15px;
+            transition: 0.25s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(220,38,38,0.24);
+            color: var(--white);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .topbar {
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(18px);
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--slate-200);
+            z-index: 5;
+        }
+
+        .topbar h2 {
+            color: var(--slate-900);
+            letter-spacing: -0.04em;
+            font-size: 26px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--slate-500);
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--slate-100);
+            border: 1px solid var(--slate-200);
+            padding: 10px 13px;
+            border-radius: 14px;
+            min-width: 260px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            color: var(--slate-700);
+        }
+
+        .content-area {
+            padding: 28px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-intro {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .intro-card {
+            flex: 1;
+            background: linear-gradient(135deg, var(--white), #f0fdfa);
+            padding: 24px;
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+        }
+
+        .intro-card h1, .intro-card h2 {
+            color: var(--slate-900);
+            letter-spacing: -0.04em;
+            margin-bottom: 10px;
+        }
+
+        .intro-card p {
+            color: var(--slate-600);
+            line-height: 1.65;
+            max-width: 980px;
+        }
+
+        .quick-actions {
+            min-width: 270px;
+            background: var(--slate-900);
+            color: var(--white);
+            padding: 22px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .quick-actions h3 {
+            margin-bottom: 14px;
+            letter-spacing: -0.03em;
+        }
+
+        .quick-actions .btn-secondary {
+            width: 100%;
+            margin-top: 10px;
+            justify-content: flex-start;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card, .panel, .mini-panel {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+        }
+
+        .stat-card {
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 92px;
+            height: 92px;
+            border-radius: 0 0 0 100%;
+            background: var(--accent, var(--primary-light));
+            opacity: 0.55;
+        }
+
+        .stat-card h3 {
+            color: var(--slate-500);
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-card .value {
+            font-size: 31px;
+            font-weight: 900;
+            color: var(--slate-900);
+            letter-spacing: -0.05em;
+            margin-bottom: 8px;
+        }
+
+        .stat-card small {
+            color: var(--slate-500);
+            font-weight: 700;
+        }
+
+        .panel {
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .panel-header h2, .panel-header h3 {
+            color: var(--slate-900);
+            letter-spacing: -0.035em;
+        }
+
+        .panel-header p {
+            color: var(--slate-500);
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 22px;
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid var(--slate-200);
+        }
+
+        .data-table th, .data-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--slate-200);
+            vertical-align: middle;
+        }
+
+        .data-table th {
+            background: var(--slate-50);
+            color: var(--slate-600);
+            font-weight: 900;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .data-table tr:hover td {
+            background: #f0fdfa;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-yellow { background: #fef3c7; color: #92400e; }
+        .badge-blue { background: #dbeafe; color: #1d4ed8; }
+        .badge-red { background: #fee2e2; color: #991b1b; }
+        .badge-purple { background: #ede9fe; color: #5b21b6; }
+        .badge-gray { background: var(--slate-100); color: var(--slate-600); }
+
+        .progress-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .progress-item {
+            display: grid;
+            gap: 8px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            color: var(--slate-700);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .progress-bar {
+            height: 10px;
+            border-radius: 999px;
+            background: var(--slate-100);
+            overflow: hidden;
+        }
+
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            width: var(--w);
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .timeline {
+            position: relative;
+            display: grid;
+            gap: 14px;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 74px 1fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        .timeline-time {
+            color: var(--primary-dark);
+            font-weight: 900;
+            background: var(--primary-light);
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .timeline-card {
+            padding: 14px;
+            border: 1px solid var(--slate-200);
+            border-radius: 14px;
+            background: var(--slate-50);
+        }
+
+        .timeline-card strong {
+            display: block;
+            color: var(--slate-900);
+            margin-bottom: 4px;
+        }
+
+        .timeline-card small {
+            color: var(--slate-500);
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .doc-card {
+            background: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            border-radius: 18px;
+            padding: 20px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .doc-card:hover {
+            border-color: var(--primary);
+            background: #f0fdfa;
+            transform: translateY(-3px);
+        }
+
+        .doc-card .doc-tag {
+            align-self: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .doc-card h3 {
+            color: var(--slate-900);
+            margin-bottom: 8px;
+        }
+
+        .doc-card p {
+            color: var(--slate-500);
+            line-height: 1.45;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .kanban {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .kanban-col {
+            background: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            border-radius: 18px;
+            padding: 14px;
+            min-height: 320px;
+        }
+
+        .kanban-col h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--slate-600);
+            margin-bottom: 12px;
+        }
+
+        .task-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 18px rgba(15,23,42,0.04);
+        }
+
+        .task-card strong {
+            display: block;
+            color: var(--slate-900);
+            margin-bottom: 6px;
+        }
+
+        .task-card p {
+            color: var(--slate-500);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .notice {
+            padding: 15px 16px;
+            border-radius: 15px;
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            line-height: 1.55;
+            font-weight: 700;
+        }
+
+        .mobile-toggle {
+            display: none;
+        }
+
+        @media (max-width: 1180px) {
+            .login-screen { grid-template-columns: 1fr; }
+            .hero-panel { min-height: auto; gap: 60px; }
+            .grid-cards { grid-template-columns: repeat(2, 1fr); }
+            .two-col, .kanban { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-screen { position: relative; }
+            .sidebar {
+                position: fixed;
+                left: -310px;
+                top: 0;
+                bottom: 0;
+                transition: 0.28s ease;
+            }
+            .sidebar.open { left: 0; }
+            .mobile-toggle { display: inline-flex; }
+            .section-intro, .topbar { flex-direction: column; align-items: stretch; }
+            .quick-actions, .search-box { min-width: auto; }
+            .doc-grid, .three-col, .form-grid { grid-template-columns: 1fr; }
+            .full { grid-column: auto; }
+        }
+
+        @media (max-width: 680px) {
+            .login-screen { padding: 18px; }
+            .hero-panel { padding: 28px; border-radius: 24px; }
+            .hero-metrics { grid-template-columns: 1fr; }
+            .tabs { grid-template-columns: repeat(2, 1fr); }
+            .login-header, .login-form, .tabs { padding-left: 22px; padding-right: 22px; }
+            .content-area { padding: 18px; }
+            .grid-cards { grid-template-columns: 1fr; }
+            .topbar { padding: 16px 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-screen" id="loginScreen">
+        <section class="hero-panel" aria-label="Apresentação do SmartClinic">
+            <div class="brand"><span class="brand-mark">SC</span><span>SmartClinic</span></div>
+            <div class="hero-content">
+                <span class="eyebrow">Sistema acadêmico demonstrativo</span>
+                <h1>Gestão clínica mais organizada, clara e eficiente.</h1>
+                <p>Uma proposta de sistema de controle para centralizar agenda médica, pacientes, prontuários, documentos, produtividade e faturamento em uma experiência simples para equipes administrativas e profissionais de saúde.</p>
+            </div>
+            <div class="hero-metrics">
+                <div class="hero-metric"><strong>32%</strong><span>menos retrabalho administrativo estimado</span></div>
+                <div class="hero-metric"><strong>4</strong><span>perfis de acesso demonstrados</span></div>
+                <div class="hero-metric"><strong>9</strong><span>módulos integrados no protótipo</span></div>
+            </div>
+        </section>
+
+        <section class="login-card" aria-label="Acesso ao sistema">
+            <div class="login-header">
+                <h2>Entrar no painel</h2>
+                <p>Escolha um perfil para visualizar permissões diferentes no protótipo.</p>
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" type="button" onclick="changeTab(this, 'Acesso: Médico')">Médico</button>
+                <button class="tab-btn" type="button" onclick="changeTab(this, 'Acesso: Secretária')">Secretária</button>
+                <button class="tab-btn" type="button" onclick="changeTab(this, 'Acesso: Diretor')">Diretor</button>
+                <button class="tab-btn" type="button" onclick="changeTab(this, 'Acesso: Administrador')">Admin</button>
+            </div>
+            <form class="login-form" onsubmit="realizarLogin(event)">
+                <div class="role-note" id="role-note">Médicos acessam agenda, pacientes, consultas e documentos clínicos.</div>
+                <div class="input-group">
+                    <label for="user">Nome do usuário</label>
+                    <input type="text" id="user" placeholder="Ex.: Camila Andrade" required autocomplete="name">
+                </div>
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="submit-btn">Acessar sistema</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="dashboard-screen" id="dashboardScreen">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="brand-mark">SC</span>
+                <div><strong>SmartClinic</strong><small>Gestão Integrada</small></div>
+            </div>
+            <div class="user-info">
+                <div class="avatar-line">
+                    <div class="avatar" id="userAvatar">U</div>
+                    <div>
+                        <h4 id="dash-user-name">Usuário Logado</h4>
+                        <p id="dash-user-role">Perfil</p>
+                    </div>
+                </div>
+            </div>
+            <ul class="menu-list" id="menuList">
+                <li class="menu-item active-menu" data-module="inicio" data-title="Página Inicial" onclick="navegarMenu(this)"><span><span class="menu-icon">IN</span>Página Inicial</span></li>
+                <li class="menu-item" data-module="agenda" data-title="Agenda Médica" onclick="navegarMenu(this)"><span><span class="menu-icon">AG</span>Agenda Médica</span><span class="lock-icon">Restrito</span></li>
+                <li class="menu-item" data-module="escala" data-title="Escala Semanal" onclick="navegarMenu(this)"><span><span class="menu-icon">ES</span>Escala Semanal</span><span class="lock-icon">Restrito</span></li>
+                <li class="menu-item" data-module="pacientes" data-title="Pacientes" onclick="navegarMenu(this)"><span><span class="menu-icon">PA</span>Pacientes</span><span class="lock-icon">Restrito</span></li>
+                <li class="menu-item" data-module="consultas" data-title="Consultas" onclick="navegarMenu(this)"><span><span class="menu-icon">CO</span>Consultas</span><span class="lock-icon">Restrito</span></li>
+                <li class="menu-item" data-module="documentos" data-title="Documentos" onclick="navegarMenu(this)"><span><span class="menu-icon">DO</span>Documentos</span><span class="lock-icon">Restrito</span></li>
+                <li class="menu-item" data-module="salarios" data-title="Honorários" onclick="navegarMenu(this)"><span><span class="menu-icon">HO</span>Honorários</span><span class="lock-icon">Restrito</span></li>
+                <li class="menu-item" data-module="financeiro" data-title="Faturamento" onclick="navegarMenu(this)"><span><span class="menu-icon">FI</span>Faturamento</span><span class="lock-icon">Restrito</span></li>
+                <li class="menu-item" data-module="cadastros" data-title="Cadastros" onclick="navegarMenu(this)"><span><span class="menu-icon">CF</span>Cadastros</span><span class="lock-icon">Restrito</span></li>
+            </ul>
+            <div class="logout-btn" onclick="fazerLogout()">Sair do sistema</div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <button class="btn-secondary mobile-toggle" type="button" onclick="toggleSidebar()">Menu</button>
+                    <div><h2 id="topbar-title">Visão Geral</h2><small id="current-date" style="color: var(--slate-500); font-weight: 800;"></small></div>
+                </div>
+                <div class="topbar-actions">
+                    <div class="search-box"><span>Buscar</span><input type="text" id="globalSearch" placeholder="paciente, documento ou convênio" oninput="filtrarTabelas(this.value)"></div>
+                    <button class="btn-primary" type="button" onclick="mostrarAvisoDemo()">Novo registro</button>
+                </div>
+            </header>
+
+            <section class="content-area">
+                <div id="sec-inicio" class="view-section active">
+                    <div class="section-intro">
+                        <div class="intro-card">
+                            <h1 id="welcome-message">Bem-vindo(a) ao painel!</h1>
+                            <p>O painel consolida os principais indicadores da clínica, permitindo que cada perfil enxergue as informações mais importantes para sua rotina. Nesta versão acadêmica, os dados são estáticos e servem para demonstrar a proposta visual e funcional do sistema.</p>
+                        </div>
+                        <div class="quick-actions">
+                            <h3>Ações rápidas</h3>
+                            <button class="btn-secondary" type="button" onclick="abrirModulo('agenda')">Ver agenda do dia</button>
+                            <button class="btn-secondary" type="button" onclick="abrirModulo('pacientes')">Consultar pacientes</button>
+                            <button class="btn-secondary" type="button" onclick="abrirModulo('financeiro')">Analisar faturamento</button>
+                        </div>
+                    </div>
+
+                    <div class="grid-cards">
+                        <div class="stat-card" style="--accent:#ccfbf1"><h3>Consultas hoje</h3><div class="value">18</div><small>14 confirmadas e 4 em espera</small></div>
+                        <div class="stat-card" style="--accent:#dbeafe"><h3>Taxa de ocupação</h3><div class="value">86%</div><small>Uso das salas de atendimento</small></div>
+                        <div class="stat-card" style="--accent:#dcfce7"><h3>Documentos emitidos</h3><div class="value">27</div><small>Receitas, atestados e exames</small></div>
+                        <div class="stat-card" style="--accent:#fef3c7"><h3>Pendências</h3><div class="value">06</div><small>Guias e confirmações em aberto</small></div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="panel">
+                            <div class="panel-header"><div><h2>Resumo operacional</h2><p>Indicadores principais para acompanhamento diário da clínica.</p></div></div>
+                            <div class="progress-list">
+                                <div class="progress-item"><div class="progress-label"><span>Confirmação de consultas</span><span>78%</span></div><div class="progress-bar"><span style="--w:78%"></span></div></div>
+                                <div class="progress-item"><div class="progress-label"><span>Prontuários atualizados</span><span>91%</span></div><div class="progress-bar"><span style="--w:91%"></span></div></div>
+                                <div class="progress-item"><div class="progress-label"><span>Guias faturadas</span><span>64%</span></div><div class="progress-bar"><span style="--w:64%"></span></div></div>
+                                <div class="progress-item"><div class="progress-label"><span>Satisfação dos pacientes</span><span>94%</span></div><div class="progress-bar"><span style="--w:94%"></span></div></div>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel-header"><div><h2>Alertas do dia</h2><p>Pontos que exigem atenção da equipe.</p></div></div>
+                            <div class="timeline">
+                                <div class="timeline-item"><div class="timeline-time">08:40</div><div class="timeline-card"><strong>Convênio pendente</strong><small>Guia de Ana Beatriz precisa de validação.</small></div></div>
+                                <div class="timeline-item"><div class="timeline-time">10:20</div><div class="timeline-card"><strong>Sala 2 ocupada</strong><small>Consulta estendida por mais 15 minutos.</small></div></div>
+                                <div class="timeline-item"><div class="timeline-time">14:00</div><div class="timeline-card"><strong>Retorno prioritário</strong><small>Paciente cardiológico confirmado para reavaliação.</small></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sec-agenda" class="view-section">
+                    <div class="section-intro"><div class="intro-card"><h2>Agenda médica</h2><p>Organize atendimentos por horário, profissional, especialidade, sala e status. O objetivo é reduzir conflitos de horários e facilitar a comunicação entre recepção e equipe clínica.</p></div></div>
+                    <div class="grid-cards">
+                        <div class="stat-card"><h3>Agendamentos</h3><div class="value">18</div><small>no dia atual</small></div>
+                        <div class="stat-card"><h3>Em espera</h3><div class="value">04</div><small>pacientes aguardando</small></div>
+                        <div class="stat-card"><h3>Atraso médio</h3><div class="value">09m</div><small>abaixo da meta de 15m</small></div>
+                        <div class="stat-card"><h3>Salas ativas</h3><div class="value">05</div><small>consultórios em uso</small></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div><h2>Agenda de hoje</h2><p>Visualização demonstrativa com status de presença e ações rápidas.</p></div><button class="btn-primary" type="button" onclick="mostrarAvisoDemo()">Novo agendamento</button></div>
+                        <div class="table-wrap"><table class="data-table searchable"><thead><tr><th>Horário</th><th>Paciente</th><th>Médico</th><th>Especialidade</th><th>Sala</th><th>Status</th><th>Ações</th></tr></thead><tbody>
+                            <tr><td>08:30</td><td>Maria de Fátima Silva</td><td>Dr. Carlos Mendes</td><td>Cardiologia</td><td>Sala 01</td><td><span class="badge badge-green">Confirmado</span></td><td><button class="btn-secondary" type="button">Atender</button></td></tr>
+                            <tr><td>09:15</td><td>João Pedro Souza</td><td>Dr. Carlos Mendes</td><td>Cardiologia</td><td>Sala 01</td><td><span class="badge badge-yellow">Aguardando</span></td><td><button class="btn-secondary" type="button">Chamar</button></td></tr>
+                            <tr><td>10:00</td><td>Ana Beatriz Lima</td><td>Dra. Fernanda Rocha</td><td>Pediatria</td><td>Sala 03</td><td><span class="badge badge-blue">Agendado</span></td><td><button class="btn-secondary" type="button">Confirmar</button></td></tr>
+                            <tr><td>11:30</td><td>Rafael Martins Costa</td><td>Dr. Roberto Lima</td><td>Ortopedia</td><td>Sala 02</td><td><span class="badge badge-red">Atrasado</span></td><td><button class="btn-secondary" type="button">Reagendar</button></td></tr>
+                            <tr><td>14:00</td><td>Helena Duarte Alves</td><td>Dra. Patrícia Nunes</td><td>Dermatologia</td><td>Sala 04</td><td><span class="badge badge-green">Confirmado</span></td><td><button class="btn-secondary" type="button">Atender</button></td></tr>
+                        </tbody></table></div>
+                    </div>
+                </div>
+
+                <div id="sec-escala" class="view-section">
+                    <div class="section-intro"><div class="intro-card"><h2>Escala semanal</h2><p>A escala ajuda a distribuir profissionais por especialidade, turno e consultório, tornando a operação previsível para recepção, médicos e direção.</p></div></div>
+                    <div class="panel">
+                        <div class="panel-header"><div><h2>Quadro de profissionais</h2><p>Planejamento ilustrativo da semana vigente.</p></div><button class="btn-primary" type="button" onclick="mostrarAvisoDemo()">Editar escala</button></div>
+                        <div class="table-wrap"><table class="data-table searchable"><thead><tr><th>Dia</th><th>Manhã</th><th>Tarde</th><th>Especialidades</th><th>Observações</th></tr></thead><tbody>
+                            <tr><td><strong>Segunda-feira</strong></td><td>Carlos, Fernanda</td><td>Patrícia, Roberto</td><td>Cardiologia, Pediatria, Dermatologia</td><td>Maior demanda de retornos.</td></tr>
+                            <tr><td><strong>Terça-feira</strong></td><td>Roberto, Camila</td><td>Fernanda, Carlos</td><td>Ortopedia, Clínica Geral, Pediatria</td><td>Reservar sala para pequenos procedimentos.</td></tr>
+                            <tr><td><strong>Quarta-feira</strong></td><td>Carlos, Roberto</td><td>Patrícia</td><td>Cardiologia, Ortopedia, Dermatologia</td><td>Atendimento encerrado às 17h.</td></tr>
+                            <tr><td><strong>Quinta-feira</strong></td><td>Fernanda, Camila</td><td>Carlos, Patrícia</td><td>Pediatria, Clínica Geral, Cardiologia</td><td>Dia de campanhas preventivas.</td></tr>
+                            <tr><td><strong>Sexta-feira</strong></td><td>Roberto, Carlos</td><td>Fernanda, Camila</td><td>Ortopedia, Cardiologia, Pediatria</td><td>Fechamento de relatórios semanais.</td></tr>
+                        </tbody></table></div>
+                    </div>
+                    <div class="three-col">
+                        <div class="mini-panel panel"><h3>Capacidade semanal</h3><p style="color:var(--slate-500); margin-top:8px; line-height:1.6;">A clínica possui 5 salas e capacidade demonstrativa de 168 consultas por semana.</p></div>
+                        <div class="mini-panel panel"><h3>Turno crítico</h3><p style="color:var(--slate-500); margin-top:8px; line-height:1.6;">Segundas pela manhã concentram maior volume e exigem apoio administrativo.</p></div>
+                        <div class="mini-panel panel"><h3>Recomendação</h3><p style="color:var(--slate-500); margin-top:8px; line-height:1.6;">Equilibrar especialidades para evitar filas específicas em cardiologia.</p></div>
+                    </div>
+                </div>
+
+                <div id="sec-pacientes" class="view-section">
+                    <div class="section-intro"><div class="intro-card"><h2>Pacientes</h2><p>Cadastro centralizado para dados pessoais, convênios, contatos, histórico de consultas e classificação de prioridade. Em um sistema real, esta área exigiria segurança, autenticação e proteção de dados sensíveis.</p></div></div>
+                    <div class="panel">
+                        <div class="panel-header"><div><h2>Base de pacientes</h2><p>Informações fictícias usadas apenas para demonstração acadêmica.</p></div><button class="btn-primary" type="button" onclick="mostrarAvisoDemo()">Cadastrar paciente</button></div>
+                        <div class="table-wrap"><table class="data-table searchable"><thead><tr><th>ID</th><th>Nome completo</th><th>Contato</th><th>Convênio</th><th>Última consulta</th><th>Prioridade</th></tr></thead><tbody>
+                            <tr><td>#001</td><td>Maria de Fátima Silva</td><td>(11) 98888-7777</td><td>Unimed</td><td>08/06/2026</td><td><span class="badge badge-red">Alta</span></td></tr>
+                            <tr><td>#002</td><td>João Pedro Souza</td><td>(11) 97777-6666</td><td>Particular</td><td>02/06/2026</td><td><span class="badge badge-yellow">Média</span></td></tr>
+                            <tr><td>#003</td><td>Ana Beatriz Lima</td><td>(11) 96666-5555</td><td>Bradesco Saúde</td><td>27/05/2026</td><td><span class="badge badge-green">Baixa</span></td></tr>
+                            <tr><td>#004</td><td>Rafael Martins Costa</td><td>(11) 95555-4444</td><td>SulAmérica</td><td>14/05/2026</td><td><span class="badge badge-yellow">Média</span></td></tr>
+                            <tr><td>#005</td><td>Helena Duarte Alves</td><td>(11) 94444-3333</td><td>Amil</td><td>01/06/2026</td><td><span class="badge badge-green">Baixa</span></td></tr>
+                        </tbody></table></div>
+                    </div>
+                </div>
+
+                <div id="sec-consultas" class="view-section">
+                    <div class="section-intro"><div class="intro-card"><h2>Consultas e prontuário</h2><p>Área demonstrativa para registrar evolução clínica, conduta, hipótese diagnóstica e documentos relacionados ao atendimento. Os campos são apenas visuais e não gravam dados em servidor.</p></div></div>
+                    <div class="two-col">
+                        <div class="panel">
+                            <div class="panel-header"><div><h2>Atendimento em andamento</h2><p>Paciente atual: <strong>Maria de Fátima Silva</strong> | Motivo: retorno cardiológico.</p></div><span class="badge badge-green">Em consulta</span></div>
+                            <div class="form-grid">
+                                <div class="input-group"><label>Pressão arterial</label><input type="text" value="130/85 mmHg"></div>
+                                <div class="input-group"><label>Frequência cardíaca</label><input type="text" value="78 bpm"></div>
+                                <div class="input-group full"><label>Queixa principal</label><textarea rows="3" placeholder="Descreva a queixa principal...">Paciente relata melhora dos sintomas após ajuste medicamentoso, sem dor torácica no período.</textarea></div>
+                                <div class="input-group full"><label>Evolução clínica</label><textarea rows="4" placeholder="Digite a evolução clínica...">Exame físico sem alterações relevantes. Orientada manutenção de hábitos saudáveis, acompanhamento de pressão arterial e retorno em 30 dias.</textarea></div>
+                                <div class="input-group"><label>CID-10</label><input type="text" value="I10 - Hipertensão essencial"></div>
+                                <div class="input-group"><label>Conduta</label><select><option>Manter tratamento e solicitar exames</option><option>Encaminhar especialista</option><option>Alta ambulatorial</option></select></div>
+                            </div>
+                            <button class="btn-primary" type="button" onclick="mostrarAvisoDemo()">Salvar atendimento</button>
+                        </div>
+                        <div class="panel">
+                            <div class="panel-header"><div><h2>Linha do tempo</h2><p>Histórico resumido do paciente.</p></div></div>
+                            <div class="timeline">
+                                <div class="timeline-item"><div class="timeline-time">Hoje</div><div class="timeline-card"><strong>Retorno</strong><small>Revisão de exames e controle de pressão.</small></div></div>
+                                <div class="timeline-item"><div class="timeline-time">Mai</div><div class="timeline-card"><strong>Consulta inicial</strong><small>Orientação clínica e prescrição inicial.</small></div></div>
+                                <div class="timeline-item"><div class="timeline-time">Abr</div><div class="timeline-card"><strong>Exames</strong><small>Solicitado ECG e perfil lipídico.</small></div></div>
+                            </div>
+                            <div class="notice" style="margin-top:18px;">Demonstração: em uma versão real, os dados clínicos precisam ser armazenados com criptografia, controle de acesso e trilha de auditoria.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sec-documentos" class="view-section">
+                    <div class="section-intro"><div class="intro-card"><h2>Documentos clínicos</h2><p>Modelos padronizados reduzem erros de digitação, agilizam emissão de receitas e mantêm identidade visual da clínica nos documentos do paciente.</p></div></div>
+                    <div class="panel">
+                        <div class="panel-header"><div><h2>Modelos disponíveis</h2><p>Cards demonstrativos para documentos frequentes.</p></div><button class="btn-primary" type="button" onclick="mostrarAvisoDemo()">Novo modelo</button></div>
+                        <div class="doc-grid">
+                            <div class="doc-card"><span class="badge badge-green doc-tag">Clínico</span><div><h3>Evolução do paciente</h3><p>Registro estruturado de sintomas, exame físico, hipótese e conduta.</p></div></div>
+                            <div class="doc-card"><span class="badge badge-blue doc-tag">Receita</span><div><h3>Receituário simples</h3><p>Modelo para prescrição de medicamentos comuns e orientações.</p></div></div>
+                            <div class="doc-card"><span class="badge badge-purple doc-tag">Controle</span><div><h3>Receituário especial</h3><p>Estrutura visual para medicamentos com exigência de controle.</p></div></div>
+                            <div class="doc-card"><span class="badge badge-yellow doc-tag">Atestado</span><div><h3>Atestado médico</h3><p>Documento para afastamento, comparecimento ou acompanhamento.</p></div></div>
+                            <div class="doc-card"><span class="badge badge-gray doc-tag">Exames</span><div><h3>Pedido de exames</h3><p>Solicitação com prioridade, justificativa clínica e convênio.</p></div></div>
+                            <div class="doc-card"><span class="badge badge-red doc-tag">Completo</span><div><h3>Prontuário completo</h3><p>Resumo histórico para acompanhamento longitudinal do paciente.</p></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sec-salarios" class="view-section">
+                    <div class="section-intro"><div class="intro-card"><h2>Honorários e produtividade</h2><p>O módulo apresenta repasses por profissional, produção mensal e distribuição por especialidade. Ajuda a direção a acompanhar metas e transparência financeira.</p></div></div>
+                    <div class="grid-cards">
+                        <div class="stat-card"><h3>Consultas no mês</h3><div class="value">412</div><small>produção consolidada</small></div>
+                        <div class="stat-card"><h3>Repasse total</h3><div class="value">R$ 55,8 mil</div><small>honorários estimados</small></div>
+                        <div class="stat-card"><h3>Média por médico</h3><div class="value">103</div><small>consultas por mês</small></div>
+                        <div class="stat-card"><h3>Meta atingida</h3><div class="value">92%</div><small>em relação ao planejamento</small></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><div><h2>Repasse de honorários</h2><p>Cálculo demonstrativo baseado na quantidade de atendimentos fechados.</p></div></div>
+                        <div class="table-wrap"><table class="data-table searchable"><thead><tr><th>Médico</th><th>Especialidade</th><th>Consultas</th><th>Valor médio</th><th>Repasse</th><th>Meta</th></tr></thead><tbody>
+                            <tr><td>Dr. Carlos Mendes</td><td>Cardiologia</td><td>120</td><td>R$ 150,00</td><td><strong>R$ 18.000,00</strong></td><td><span class="badge badge-green">100%</span></td></tr>
+                            <tr><td>Dra. Fernanda Rocha</td><td>Pediatria</td><td>95</td><td>R$ 130,00</td><td><strong>R$ 12.350,00</strong></td><td><span class="badge badge-yellow">86%</span></td></tr>
+                            <tr><td>Dr. Roberto Lima</td><td>Ortopedia</td><td>80</td><td>R$ 140,00</td><td><strong>R$ 11.200,00</strong></td><td><span class="badge badge-blue">91%</span></td></tr>
+                            <tr><td>Dra. Patrícia Nunes</td><td>Dermatologia</td><td>117</td><td>R$ 122,00</td><td><strong>R$ 14.274,00</strong></td><td><span class="badge badge-green">104%</span></td></tr>
+                        </tbody></table></div>
+                    </div>
+                </div>
+
+                <div id="sec-financeiro" class="view-section">
+                    <div class="section-intro"><div class="intro-card"><h2>Faturamento geral</h2><p>Visão para diretoria e administração acompanharem receitas, custos, convênios, lotes de faturamento e pendências financeiras.</p></div></div>
+                    <div class="grid-cards">
+                        <div class="stat-card" style="--accent:#dcfce7"><h3>Faturamento bruto</h3><div class="value">R$ 74,6 mil</div><small>mês atual</small></div>
+                        <div class="stat-card" style="--accent:#fef3c7"><h3>Custos operacionais</h3><div class="value">R$ 21,4 mil</div><small>folha, aluguel e insumos</small></div>
+                        <div class="stat-card" style="--accent:#dbeafe"><h3>Recebível</h3><div class="value">R$ 17,9 mil</div><small>convênios a liquidar</small></div>
+                        <div class="stat-card" style="--accent:#ede9fe"><h3>Margem estimada</h3><div class="value">31%</div><small>após despesas diretas</small></div>
+                    </div>
+                    <div class="two-col">
+                        <div class="panel">
+                            <div class="panel-header"><div><h2>Histórico de receita</h2><p>Lotes e pagamentos demonstrativos.</p></div></div>
+                            <div class="table-wrap"><table class="data-table searchable"><thead><tr><th>Fonte</th><th>Tipo</th><th>Status</th><th>Vencimento</th><th>Valor</th></tr></thead><tbody>
+                                <tr><td>Convênio Unimed</td><td>Lote XML</td><td><span class="badge badge-green">Recebido</span></td><td>05/06/2026</td><td>R$ 22.400,00</td></tr>
+                                <tr><td>Bradesco Saúde</td><td>Guia TISS</td><td><span class="badge badge-yellow">Processando</span></td><td>14/06/2026</td><td>R$ 11.800,00</td></tr>
+                                <tr><td>Particular</td><td>Cartão/Pix</td><td><span class="badge badge-green">Recebido</span></td><td>Diário</td><td>R$ 18.550,00</td></tr>
+                                <tr><td>SulAmérica</td><td>Auditoria</td><td><span class="badge badge-red">Pendente</span></td><td>21/06/2026</td><td>R$ 7.920,00</td></tr>
+                            </tbody></table></div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel-header"><div><h2>Composição da receita</h2><p>Distribuição percentual por fonte pagadora.</p></div></div>
+                            <div class="progress-list">
+                                <div class="progress-item"><div class="progress-label"><span>Convênios</span><span>58%</span></div><div class="progress-bar"><span style="--w:58%"></span></div></div>
+                                <div class="progress-item"><div class="progress-label"><span>Particular</span><span>25%</span></div><div class="progress-bar"><span style="--w:25%"></span></div></div>
+                                <div class="progress-item"><div class="progress-label"><span>Procedimentos</span><span>12%</span></div><div class="progress-bar"><span style="--w:12%"></span></div></div>
+                                <div class="progress-item"><div class="progress-label"><span>Outros</span><span>5%</span></div><div class="progress-bar"><span style="--w:5%"></span></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sec-cadastros" class="view-section">
+                    <div class="section-intro"><div class="intro-card"><h2>Cadastros e configurações</h2><p>Central administrativa para parametrizar profissionais, convênios, salas, especialidades, documentos e regras de acesso. Em um produto real, esse módulo seria restrito a perfis autorizados.</p></div></div>
+                    <div class="kanban">
+                        <div class="kanban-col"><h3>Profissionais</h3><div class="task-card"><strong>Médicos</strong><p>Cadastro com CRM, especialidade, agenda e valor de repasse.</p></div><div class="task-card"><strong>Equipe administrativa</strong><p>Secretaria, coordenação, permissões e responsabilidades.</p></div></div>
+                        <div class="kanban-col"><h3>Convênios</h3><div class="task-card"><strong>Operadoras</strong><p>Planos aceitos, regras de autorização e prazos de pagamento.</p></div><div class="task-card"><strong>Tabelas de preço</strong><p>Valores por procedimento, consulta e especialidade.</p></div></div>
+                        <div class="kanban-col"><h3>Estrutura</h3><div class="task-card"><strong>Salas</strong><p>Controle de consultórios, equipamentos e disponibilidade.</p></div><div class="task-card"><strong>Especialidades</strong><p>Organização dos serviços prestados pela clínica.</p></div></div>
+                        <div class="kanban-col"><h3>Sistema</h3><div class="task-card"><strong>Perfis de acesso</strong><p>Definição de módulos permitidos para cada tipo de usuário.</p></div><div class="task-card"><strong>Modelos</strong><p>Textos padronizados para documentos e comunicações.</p></div></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const roleNotes = {
+            'Acesso: Médico': 'Médicos acessam agenda, pacientes, consultas e documentos clínicos.',
+            'Acesso: Secretária': 'Secretárias acessam agenda, escala, pacientes e cadastros operacionais.',
+            'Acesso: Diretor': 'Diretores possuem visão ampla: operação, produtividade, honorários e faturamento.',
+            'Acesso: Administrador': 'Administradores visualizam todos os módulos e configurações do protótipo.'
+        };
+
+        const permissoesPorPerfil = {
+            'Acesso: Médico': ['inicio', 'agenda', 'escala', 'pacientes', 'consultas', 'documentos'],
+            'Acesso: Secretária': ['inicio', 'agenda', 'escala', 'pacientes', 'cadastros'],
+            'Acesso: Diretor': ['inicio', 'agenda', 'escala', 'pacientes', 'consultas', 'documentos', 'salarios', 'financeiro', 'cadastros'],
+            'Acesso: Administrador': ['inicio', 'agenda', 'escala', 'pacientes', 'consultas', 'documentos', 'salarios', 'financeiro', 'cadastros']
+        };
+
+        function changeTab(element, title) {
+            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('role-note').innerText = roleNotes[title];
+            document.getElementById('user').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('user').focus();
+        }
+
+        function realizarLogin(event) {
+            event.preventDefault();
+            const perfilRaw = document.querySelector('.tab-btn.active').innerText;
+            const perfilMap = { 'Médico': 'Acesso: Médico', 'Secretária': 'Acesso: Secretária', 'Diretor': 'Acesso: Diretor', 'Admin': 'Acesso: Administrador' };
+            const perfil = perfilMap[perfilRaw] || 'Acesso: Médico';
+            const nomeUsuario = document.getElementById('user').value.trim() || 'Usuário';
+            const iniciais = nomeUsuario.split(' ').filter(Boolean).slice(0, 2).map(p => p[0]).join('').toUpperCase();
+
+            document.getElementById('dash-user-name').innerText = nomeUsuario;
+            document.getElementById('dash-user-role').innerText = perfil.replace('Acesso: ', 'Perfil: ');
+            document.getElementById('userAvatar').innerText = iniciais || 'U';
+            document.getElementById('welcome-message').innerText = `Bem-vindo(a), ${nomeUsuario}!`;
+
+            aplicarPermissoes(perfil);
+
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboardScreen').style.display = 'flex';
+
+            abrirModulo('inicio');
+
+            const dateOpts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').innerText = new Date().toLocaleDateString('pt-BR', dateOpts);
+        }
+
+        function aplicarPermissoes(perfil) {
+            const permitidos = permissoesPorPerfil[perfil] || ['inicio'];
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const mod = item.getAttribute('data-module');
+                item.classList.toggle('locked', !permitidos.includes(mod));
+            });
+        }
+
+        function navegarMenu(elementoClicado) {
+            if (elementoClicado.classList.contains('locked')) {
+                alert('Acesso bloqueado: este módulo é restrito para o perfil selecionado.');
+                return;
+            }
+            const modulo = elementoClicado.getAttribute('data-module');
+            abrirModulo(modulo);
+        }
+
+        function abrirModulo(modulo) {
+            const item = document.querySelector(`[data-module="${modulo}"]`);
+            if (!item || item.classList.contains('locked')) {
+                alert('Este módulo não está disponível para o perfil atual.');
+                return;
+            }
+
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active-menu'));
+            item.classList.add('active-menu');
+            const textoMenu = item.getAttribute('data-title') || item.innerText.replace('Restrito', '').trim();
+            document.getElementById('topbar-title').innerText = textoMenu;
+
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            const section = document.getElementById('sec-' + modulo);
+            if (section) section.classList.add('active');
+            document.getElementById('sidebar').classList.remove('open');
+        }
+
+        function fazerLogout() {
+            document.getElementById('dashboardScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'grid';
+            document.getElementById('password').value = '';
+            document.getElementById('globalSearch').value = '';
+            filtrarTabelas('');
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function mostrarAvisoDemo() {
+            alert('Funcionalidade demonstrativa: como o projeto é apenas frontend, esta ação não salva dados em banco.');
+        }
+
+        function filtrarTabelas(valor) {
+            const termo = valor.toLowerCase().trim();
+            document.querySelectorAll('table.searchable tbody tr').forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(termo) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
